@@ -5,3 +5,7 @@ Encore à faire :
 - Ne remettre à 0 le compteur de login_attempts qu'après avoir entré le lien de réinitialisation du compte
 - Réinitialiser un mot de passe( envoi de mail avec un lien)
 - Modifier en code PIN l'authentification en deux facteurs et non une URL
+- Docker
+
+- Rehefa mi logue ilay olona dia mahazo code PIN
+- Fa raha mandiso izy dia misy token de réinitialisation

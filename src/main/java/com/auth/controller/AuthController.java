@@ -46,20 +46,25 @@ public class AuthController {
         authService.verify2FA(email, code);
         return ResponseEntity.ok("2FA verification successful.");
     }
-
 /*
+    @PostMapping("/reset-password")
+    @Operation(summary = "Reset password")
+    public ResponseEntity<String> resetPasswordFirst(@PathVariable String token, @RequestParam String email) {
+        authService.resetPasswordFirst(email);
+        return ResponseEntity.ok("Token envoyé par email");
+    }
+
     @PostMapping("/reset-password/{token}")
     @Operation(summary = "Reset password")
     public ResponseEntity<String> resetPassword(@PathVariable String token, @RequestParam String newPassword) {
         authService.resetPassword(token, newPassword);
         return ResponseEntity.ok("Password reset successfully.");
-    }
-
+    }*/
     @PutMapping("/update")
     @Operation(summary = "Update user information")
     public ResponseEntity<String> updateUser(@RequestParam String email, @Valid @RequestBody UserUpdateRequest request) {
         authService.updateUser(email, request);
         return ResponseEntity.ok("User information updated successfully.");
-    }*/
+    }
 
 }

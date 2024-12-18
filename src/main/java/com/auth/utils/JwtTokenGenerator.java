@@ -20,6 +20,7 @@ public class JwtTokenGenerator {
                 .compact();
     }
 
+
     public static boolean validateToken(String token) {
         try {
             Jwts.parserBuilder().setSigningKey(SECRET_KEY).build().parseClaimsJws(token);

@@ -1,6 +1,7 @@
 package com.auth.entity;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Pattern;
 import lombok.Data;
 
 import java.time.LocalDateTime;
@@ -14,6 +15,7 @@ public class TwoFactorCode {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Pattern(regexp = "\\d{6}", message = "The code must be a 6-digit PIN")
     private String code;
 
     private LocalDateTime expiryDate;
