@@ -1,0 +1,7 @@
+Encore à faire : 
+- Modifier le message d'erreur quand le nombre de tentative est atteint
+- Ajouter une table configuration pour la configuration du nombre de tentatives possibles
+- Ajouter un message quand l'utilisateur est bien connecté
+- Ne remettre à 0 le compteur de login_attempts qu'après avoir entré le lien de réinitialisation du compte
+- Réinitialiser un mot de passe( envoi de mail avec un lien)
+- Modifier en code PIN l'authentification en deux facteurs et non une URL

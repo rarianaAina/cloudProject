@@ -1,0 +1,41 @@
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/projet_cloud
+    username: postgres
+    password: rariana
+  jpa:
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: rarianamiadana@gmail.com
+    password: mgxypljhfsktzlbk
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+
+jwt:
+  secret: your-secret-key-should-be-very-long-and-secure
+  expiration: 86400000
+
+app:
+  login:
+    max-attempts: 3
+  2fa:
+    expiration: 90
+    code-length: 6
+
+server:
+  port: 8443  # Utilisez le port 8443 pour HTTPS
+  ssl:
+    key-store: file:///D:/ITU/Java/cloud/keystore.p12  # Le chemin complet vers votre keystore
+    key-store-password: motdepasse  # Le mot de passe de votre keystore
+    key-store-type: PKCS12  # Le type du keystore
+    key-alias: tomcat  # L'alias de votre certificat
