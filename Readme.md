@@ -59,8 +59,8 @@ Ce projet implémente un fournisseur d'identité sous forme d'API REST, dévelop
 ### 1. Cloner le projet
 
 ```bash
-git clone <https://github.com/rarianaAina/cloudProject.git>
-cd <cloudProject>
+git clone https://github.com/rarianaAina/cloudProject.git
+cd cloudProject
 ```
 
 ### 2. Construire et lancer avec Docker
