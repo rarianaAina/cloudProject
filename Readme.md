@@ -194,6 +194,10 @@ curl -X 'GET' \
 - **Larry Joann** : **ETU00003**
 - **Mampionona Rinasoa Ramarosandratana** : **ETU00015**
 
+### ***Liste des tâches :***
+
+`[[text](https://docs.google.com/spreadsheets/d/14Y1N1uY1NLFILozMZSLSuBJScVtQY2m_s2X9kR4YFu4/edit?usp=sharing)]`
+
 ---
 
 ## **Documentation Technique**
