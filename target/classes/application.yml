@@ -34,8 +34,8 @@ app:
 
 server:
   port: 8443  # Utilisez le port 8443 pour HTTPS
-  ssl:
-    key-store: file:///D:/ITU/Java/cloud/keystore.p12  # Le chemin complet vers votre keystore
-    key-store-password: motdepasse  # Le mot de passe de votre keystore
-    key-store-type: PKCS12  # Le type du keystore
-    key-alias: tomcat  # L'alias de votre certificat
+#  ssl:
+#    key-store: file:///D:/ITU/Java/cloud/keystore.p12  # Le chemin complet vers votre keystore
+#    key-store-password: motdepasse  # Le mot de passe de votre keystore
+#    key-store-type: PKCS12  # Le type du keystore
+#    key-alias: tomcat  # L'alias de votre certificat

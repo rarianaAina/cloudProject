@@ -20,31 +20,38 @@ public class AuthController {
     private final AuthService authService;
 
     @PostMapping("/signup")
-    @Operation(summary = "Register a new user")
+    @Operation(summary = "Inscription d'un utilisateur")
     public ResponseEntity<String> signup(@Valid @RequestBody SignupRequest request) {
         authService.signup(request);
-        return ResponseEntity.ok("User registered successfully. Please check your email for verification.");
+        return ResponseEntity.ok("Votre insription est prise en compte et un mail de validation vous a été envoyée.");
     }
 
     @PostMapping("/login")
-    @Operation(summary = "Login user")
+    @Operation(summary = "Authentification de l'utilisateur")
     public ResponseEntity<String> login(@Valid @RequestBody LoginRequest request) {
-        authService.login(request);
-        return ResponseEntity.ok("2FA code sent to your email.");
+        authService.loginFirst(request);
+        return ResponseEntity.ok("Un code PIN a été envoyé à votre adresse email pour confirmer votre connexion");
     }
 
+/*    @PostMapping("/loginConfirm/{code}")
+    @Operation(summary = "Confirmation de login")
+    public ResponseEntity<String> loginConfirm(@Valid @RequestBody LoginRequest request, @PathVariable String code) {
+        authService.loginConfirm(request, code);
+        return ResponseEntity.ok("Vous êtes bien logués");
+    }*/
+
     @GetMapping("/verify-email/{token}")
-    @Operation(summary = "Verify email address")
+    @Operation(summary = "Vérification de l'adresse email pour confirmer l'inscription")
     public ResponseEntity<String> verifyEmail(@PathVariable String token) {
         authService.verifyEmail(token);
         return ResponseEntity.ok("Email verified successfully.");
     }
 
     @PostMapping("/verify-2fa/{email}/{code}")
-    @Operation(summary = "Verify 2FA code")
+    @Operation(summary = "Vérification et Utilisation du code PIN")
     public ResponseEntity<String> verify2FA(@PathVariable String email, @PathVariable String code) {
         authService.verify2FA(email, code);
-        return ResponseEntity.ok("2FA verification successful.");
+        return ResponseEntity.ok("La vérification en deux facteurs est un succès");
     }
 /*
     @PostMapping("/reset-password")
@@ -61,10 +68,10 @@ public class AuthController {
         return ResponseEntity.ok("Password reset successfully.");
     }*/
     @PutMapping("/update")
-    @Operation(summary = "Update user information")
+    @Operation(summary = "Mise à jour des informations d'un utilisateur")
     public ResponseEntity<String> updateUser(@RequestParam String email, @Valid @RequestBody UserUpdateRequest request) {
         authService.updateUser(email, request);
-        return ResponseEntity.ok("User information updated successfully.");
+        return ResponseEntity.ok("Vos informations ont été mises à jour correctement");
     }
 
 }

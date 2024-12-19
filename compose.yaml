@@ -4,15 +4,14 @@ services:
       context: .
       dockerfile: Dockerfile
     ports:
-      - "8080:8080"
+      - "8443:8443"
     environment:
       SPRING_DATASOURCE_URL: jdbc:postgresql://db:5432/api
       SPRING_DATASOURCE_USERNAME: api
       SPRING_DATASOURCE_PASSWORD: api
-      SPRING_SECURITY_USER_NAME: api
-      SPRING_SECURITY_USER_PASSWORD: api
     depends_on:
       - db
+    command: ["sh", "-c", "until nc -z -v -w30 db 5432; do echo 'Waiting for database...'; sleep 1; done; java -jar /app/app.jar"]
 
   db:
     image: postgres:15
