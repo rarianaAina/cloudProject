@@ -196,7 +196,7 @@ curl -X 'GET' \
 
 ### ***Liste des tâches :***
 
-`[[text](https://docs.google.com/spreadsheets/d/14Y1N1uY1NLFILozMZSLSuBJScVtQY2m_s2X9kR4YFu4/edit?usp=sharing)]`
+[[text](https://docs.google.com/spreadsheets/d/14Y1N1uY1NLFILozMZSLSuBJScVtQY2m_s2X9kR4YFu4/edit?usp=sharing)]
 
 ---
 
