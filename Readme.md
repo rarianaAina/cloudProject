@@ -48,8 +48,14 @@ Ce projet implémente un fournisseur d'identité sous forme d'API REST, dévelop
 
 ## **Prérequis**
 
-- **Java 17+**
-- **Maven 3.8+**
+### **Instalation locale**
+
+- **Java 21+**
+- **Maven 3.9+**
+- **PostgreSQL 15+**
+
+### **Instalation via Docker**
+
 - **Docker** et **Docker Compose**
 
 ---
@@ -71,7 +77,7 @@ docker-compose up --build
 
 ### 3. Accéder à l'application
 
-- API Swagger : `http://localhost:8080/swagger-ui.html`
+- API Swagger : `http://localhost:8443/swagger-ui/index.html`
 
 ---
 
@@ -83,18 +89,24 @@ docker-compose up --build
 ├── src
 │   ├── main
 │   │   ├── java
-│   │   │   └── com.example.identityprovider
-│   │   │       ├── controller  # Gestion des endpoints REST
-│   │   │       ├── model       # Entités et DTO
-│   │   │       ├── repository  # Accès à la base de données
-│   │   │       ├── service     # Logique métier
-│   │   │       └── config      # Configuration (sécurité, JWT, etc.)
+│   │   │   └── com.auth
+│   │   │       ├── AuthApplication     # Point d'entrée de l'application
+│   │   │       ├── controller          # Controleurs de l'application
+│   │   │       ├── dto                 # DTO (Data Transfer Object)
+│   │   │       ├── entity              # Entités de données
+│   │   │       ├── repository          # Accès aux données
+│   │   │       ├── service             # Logique metier
+│   │   │       └── config              # Configuration (security, swagger...)
 │   │   └── resources
-│   │       ├── application.yml # Configuration de l'application
-│   │       └── templates       # Templates email
-├── docker-compose.yml           # Configuration Docker Compose
-├── README.md                    # Documentation du projet
-└── postman_collection.json      # Collection Postman pour tester l'API
+│   │       └── application.yml     # Configuration de l'application
+│   └── target
+├── pom.xml                         # Fichier Maven
+├── Dockerfile                      # Configuration Docker
+├── .gitignore                      # Ignorer certains fichiers
+├── .env                            # Variables d'environnement
+├── docker-compose.yml              # Configuration Docker Compose
+├── README.md                       # Documentation du projet
+└── postman_collection.json         # Collection Postman pour tester l'API
 ```
 
 ---
@@ -103,17 +115,66 @@ docker-compose up --build
 
 ### **Authentification**
 
-- `POST /api/auth/register` : Inscription d'un utilisateur.
-- `POST /api/auth/login` : Connexion avec vérification du PIN.
+- Inscription d'un utilisateur  :
+
+```bash
+curl -X 'POST' \
+  'http://localhost:8443/api/auth/signup' \
+  -H 'accept: */*' \
+  -H 'Content-Type: application/json' \
+  -d '{
+    "email": "your_email@example.com",
+    "password": "your_password",
+    "firstName": "Your First Name",
+    "lastName": "Your Last Name"
+  }'
+```
+
+- Connexion d'un utilisateur :
+
+```bash
+curl -X 'POST' \
+  'http://localhost:8443/api/auth/login' \
+  -H 'accept: */*' \
+  -H 'Content-Type: application/json' \
+  -d '{
+  "email": "string",
+  "password": "string"
+}'
+```
 
 ### **Utilisateur**
 
-- `GET /api/users/me` : Récupérer les informations de l'utilisateur connecté.
-- `PUT /api/users/me` : Modifier les informations personnelles.
+- Vérification de l'email et utilisation du PIN :
 
-### **Administration**
+```bash
+curl -X 'POST' \
+  'http://localhost:8443/api/auth/verify-2fa/your_email/your_pin' \
+  -H 'accept: */*' \
+  -d ''
+```
 
-- `POST /api/auth/reset-attempts` : Réinitialisation des tentatives de connexion.
+- Modifier les informations personnelles :
+
+```bash
+curl -X 'PUT' \
+  'http://localhost:8443/api/auth/update?email=test%40test.com' \
+  -H 'accept: */*' \
+  -H 'Content-Type: application/json' \
+  -d '{
+  "firstName": "string",
+  "lastName": "string",
+  "password": "string"
+}'
+```
+
+- Vérification de l'email via un lien :
+
+```bash
+curl -X 'GET' \
+  'http://localhost:8443/api/auth/verify-email/test' \
+  -H 'accept: */*'
+```
 
 ---
 
@@ -131,7 +192,7 @@ docker-compose up --build
 - **Rariana Miadana** : **ETU00001**
 - **Harena Andraina Ramarosandratana** : **ETU00002**
 - **Larry Joann** : **ETU00003**
-- **Mampionona Rinasoa Ramarosandratana** : **ETU001015**
+- **Mampionona Rinasoa Ramarosandratana** : **ETU00015**
 
 ---
 
@@ -144,8 +205,12 @@ Inclure un diagramme du modèle conceptuel des données pour présenter les rela
 ### 2. Scénarios d'utilisation
 
 - Inscription et validation par email.
+![inscription](img/signup.png)
+![validation](img/validation.png)
 - Authentification multifacteur avec PIN.
+![login](img/login.png)
 - Gestion des comptes utilisateurs.
+![user](img/user.png)
 
 ### 3. Choix Techniques
 

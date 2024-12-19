@@ -1,5 +1,5 @@
 # Étape 1 : Construire l'application
-FROM maven:3.9.4-eclipse-temurin-17 AS builder
+FROM maven:3.9.9-eclipse-temurin-21 AS builder
 
 # Configurer le répertoire de travail
 WORKDIR /app
@@ -14,8 +14,8 @@ COPY . .
 # Construire l'application
 RUN mvn clean package -DskipTests
 
-# Étape 2 : Image pour exécuter l'application
-FROM openjdk:17-jdk-slim
+# Étape 2 : Créer l'image finale
+FROM openjdk:21
 
 # Configurer le répertoire de travail
 WORKDIR /app
@@ -23,8 +23,11 @@ WORKDIR /app
 # Copier le fichier JAR depuis l'étape de build
 COPY --from=builder /app/target/*.jar app.jar
 
-# Exposer le port
+# Exposer le port utilisé par l'application
 EXPOSE 8443
+
+# Définir les variables d'environnement pour Java
+ENV JAVA_OPTS=""
 
 # Commande d'entrée
 ENTRYPOINT ["java", "-jar", "app.jar"]
