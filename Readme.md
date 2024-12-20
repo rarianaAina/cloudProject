@@ -189,10 +189,10 @@ curl -X 'GET' \
 
 ### **Nom et Prénom :**
 
-- **Rariana Miadana** : **ETU00001**
-- **Harena Andraina Ramarosandratana** : **ETU00002**
+- **Rariana Aina Andriamiadana** : **ETU000739**
+- **Harena Andraina Ramarosandratana** : **ETU002353**
 - **Larry Joann** : **ETU00003**
-- **Mampionona Rinasoa Ramarosandratana** : **ETU00015**
+- **Mampionona Rinasoa Ramarosandratana** : **ETU001015**
 
 ### ***Liste des tâches :***
 
@@ -208,8 +208,17 @@ Inclure un diagramme du modèle conceptuel des données pour présenter les rela
 
 ### 2. Scénarios d'utilisation
 
-- Inscription et validation par email.
+#### **Inscription et validation par email :**
+
+- Accéder au lien du swagger
+API Swagger : `http://localhost:8443/swagger-ui/index.html`
+
+- Aller dans la partie signup et ajouter votre email, password, prenom et nom.
 ![inscription](img/signup.png)
+NB: vous devriez avoir un statut 200 avec un message de confirmation d'inscription.
+sinon, verifier vos parametres et renvoyer la requete.
+
+- Aller dans la partie verify-email et verifier l'email.
 ![validation](img/validation.png)
 - Authentification multifacteur avec PIN.
 ![login](img/login.png)
