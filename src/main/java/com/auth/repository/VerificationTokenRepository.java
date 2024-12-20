@@ -1,3 +1,9 @@
+/**
+ * Repository interface for {@link VerificationToken} entity.
+ * Extends {@link JpaRepository} to provide CRUD operations.
+ * 
+ * @author 
+ */
 package com.auth.repository;
 
 import com.auth.entity.VerificationToken;

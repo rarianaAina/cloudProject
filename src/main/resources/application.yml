@@ -1,41 +1,103 @@
 spring:
   datasource:
-    url: jdbc:postgresql://localhost:5432/projet_cloud
-    username: postgres
-    password: rariana
+    url: jdbc:postgresql://${DB_HOST:localhost}:${DB_PORT:5432}/${DB_NAME:projet_cloud}
+    username: ${DB_USER:postgres}
+    password: ${DB_PASSWORD:rariana}
+    hikari:
+      maximum-pool-size: 10
+      minimum-idle: 5
+      idle-timeout: 300000
+      connection-timeout: 20000
+      max-lifetime: 1200000
   jpa:
     hibernate:
-      ddl-auto: update
+      ddl-auto: validate
     properties:
       hibernate:
         dialect: org.hibernate.dialect.PostgreSQLDialect
+        format_sql: true
+        jdbc:
+          batch_size: 25
+          batch_versioned_data: true
+        order_inserts: true
+        order_updates: true
+        generate_statistics: true
+    open-in-view: false
+    show-sql: true
+  sql:
+    init:
+      mode: always
   mail:
     host: smtp.gmail.com
     port: 587
-    username: rarianamiadana@gmail.com
-    password: mgxypljhfsktzlbk
+    username: ${MAIL_USERNAME}
+    password: ${MAIL_PASSWORD}
     properties:
       mail:
         smtp:
           auth: true
           starttls:
             enable: true
+          connectiontimeout: 5000
+          timeout: 5000
+          writetimeout: 5000
+    test-connection: true
 
 jwt:
-  secret: your-secret-key-should-be-very-long-and-secure
-  expiration: 86400000
+  secret: ${JWT_SECRET}
+  expiration: ${JWT_EXPIRATION}
 
 app:
   login:
-    max-attempts: 3
+    max-attempts: ${LOGIN_MAX_ATTEMPTS:3}
+    lockout-duration: ${LOGIN_LOCKOUT_DURATION:900}
   2fa:
-    expiration: 90
-    code-length: 6
+    expiration: ${TWO_FA_EXPIRATION:90}
+    code-length: ${TWO_FA_CODE_LENGTH:6}
+    max-attempts: ${TWO_FA_MAX_ATTEMPTS:3}
 
 server:
-  port: 8443  # Utilisez le port 8443 pour HTTPS
-  ssl:
-    key-store: file:///D:/ITU/Java/cloud/keystore.p12  # Le chemin complet vers votre keystore
-    key-store-password: motdepasse  # Le mot de passe de votre keystore
-    key-store-type: PKCS12  # Le type du keystore
-    key-alias: tomcat  # L'alias de votre certificat
+  port: ${SERVER_PORT:8443}
+  tomcat:
+    max-threads: 200
+    accept-count: 100
+    connection-timeout: 20000
+    max-connections: 8192
+    min-spare-threads: 10
+  compression:
+    enabled: true
+    mime-types: text/html,text/xml,text/plain,text/css,application/javascript,application/json
+    min-response-size: 1024
+  # ssl:
+  #   enabled: true
+  #   key-store-type: PKCS12
+  #   key-store: classpath:keystore/keystore.p12
+  #   key-store-password: ${SSL_KEY_STORE_PASSWORD}
+  #   key-alias: tomcat
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,metrics,prometheus
+  endpoint:
+    health:
+      show-details: when_authorized
+      probes:
+        enabled: true
+
+logging:
+  level:
+    root: INFO
+    org.springframework.security: INFO
+    org.springframework.web: INFO
+    com.auth: DEBUG
+    org.hibernate.SQL: DEBUG
+    org.hibernate.type.descriptor.sql.BasicBinder: TRACE
+  pattern:
+    console: "%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{36} - %msg%n"
+    file: "%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{36} - %msg%n"
+  file:
+    name: logs/application.log
+    max-size: 10MB
+    max-history: 7
